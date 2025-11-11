@@ -11,3 +11,13 @@ FROM plays
 WHERE rush_attempt = TRUE
 group by ydstogo
 order by average_yards desc;
+SELECT
+  rusher_player_id,
+  rusher_player_name,
+  AVG(yards_gained - ((0.13 * ydstogo) + 3.47)) AS avg_yards_over_expected,
+  COUNT(*) AS rush_count
+FROM plays
+WHERE rush_attempt = TRUE
+GROUP BY rusher_player_id
+HAVING COUNT(*) >= 100
+ORDER BY avg_yards_over_expected DESC;
